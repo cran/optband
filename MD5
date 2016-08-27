@@ -1,0 +1,14 @@
+58033b846826d3ffd08bbd6e8d0a93a2 *DESCRIPTION
+4ee7549396ef2ba69e69e4faa1b644c5 *NAMESPACE
+635c7b26934d0f801ce0c985899c2c8d *R/package_functions.R
+985ef5e2715020caab2fc72bdb3ffd23 *build/vignette.rds
+70ac5636867530b9aa027c29ee9941e1 *inst/doc/optci.R
+dfa75d8089c47e9e8f3b00a91613da97 *inst/doc/optci.Rmd
+c8e2d62d685f8597944eefafa8ae222e *inst/doc/optci.html
+e38fed3009b8cc0c440590b2200a8aa9 *man/cumhaz.var.Rd
+ede688a7a96a8462b124dd56fd1bb204 *man/modify.surv.fun.Rd
+c84b95216b793f98c07126e695954c42 *man/opt.ci.Rd
+a6e93acb4a5d6ce49bc1d32528e0922e *man/psi.Rd
+58653300d485dfb460b6700df925d4a2 *man/riemsum.Rd
+357fc1c02c6c05525aebaaa2c02efa86 *man/surv.range.Rd
+dfa75d8089c47e9e8f3b00a91613da97 *vignettes/optci.Rmd
