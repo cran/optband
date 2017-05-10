@@ -4,7 +4,7 @@ author: "Tom Chen & Sam Tracy"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{opt.ci}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -33,9 +33,10 @@ This package instead approaches the problem purely from an optimization perspect
 
 ## Example
 
-First, let's generate some data and estimate the Kaplan-Meier curve:
+First, let's generate some survival data using the `stats` package and estimate the Kaplan-Meier curve:
 
 ```{r, echo=TRUE}
+set.seed(1990)
 N = 200
 x1 <- stats::rweibull(N, 1, 1)
 x2 <- stats::rweibull(N, 2, 1)
@@ -52,14 +53,14 @@ opt_S <- optband::opt.ci(S, conf.level = 0.95, fun = "surv", tl = NA, tu = NA)
 plot(opt_S, xlab="time", ylab="KM", mark.time=FALSE)
 ```
 
-And we can do the same with the estimated cumultive-hazard function:
+And we can do the same with the estimated cumulative-hazard function:
 
 ```{r, fig.show='hold', fig.height=6, fig.width=6, echo=TRUE}
 opt_H <- optband::opt.ci(S, conf.level = 0.95, fun = "cumhaz", tl = NA, tu = NA)
 plot(opt_H, fun="cumhaz", xlab="time", ylab="CH", mark.time=FALSE)
 ```
 
-We can further play with the procedure by adjusting the $\alpha$ level and truncating the data:
+We can further play with the procedure by adjusting the coverage level and also truncating the data:
 
 ```{r, fig.show='hold', fig.height=6, fig.width=6, echo=TRUE}
 opt_H <- optband::opt.ci(S, conf.level = 0.90, fun = "cumhaz", tl = .1, tu = .9)
@@ -83,12 +84,26 @@ legend("topright", c("KM", "optband", "epband", "hall-wellner"),
        lwd=2, lty=1:4, col=color)
 ````
 
+Lastly, while the 2-sample survival function difference confidence bands are intractable with this method, we can estimate confidence bands for the cumulative hazard function difference. For this, we'll use the `bladder` data set from the `survival` package, first subsetting upon only the times until first recurrence:
+
+````{r, fig.height=6, fig.width=6, echo=TRUE}
+dat <- bladder[bladder$enum==1,]
+Hdif = survival::survfit(Surv(stop, event) ~ rx, type="kaplan-meier", data=dat)
+opt_Hdif <- optband::opt.ci(Hdif, fun="cumhaz", conf.level = 0.95, samples=2)
+
+plot(opt_Hdif$difference~opt_Hdif$time, xlab="t", ylim=c(-1.5,1),
+     main=expression(hat(Lambda)(t)[1]-hat(Lambda)(t)[2]), ylab="", col = "white")
+lines(opt_Hdif$difference~opt_Hdif$time, col = "grey", lty=1, lwd=2)
+lines(-log(opt_Hdif$upper)~opt_Hdif$time, col=4, lty=3, lwd=2)
+lines(-log(opt_Hdif$lower)~opt_Hdif$time, col=4, lty=3, lwd=2)
+````
+
 ## References
 
 Kendall, W.S., Marin, J.M. and Robert, C.P. (2007). Confidence bands for Brownian motion and applications to Monte Carlo simulation. Statistics and Computing, 17(1), pp.1-10.
 
 Therneau T (2015). A Package for Survival Analysis in S. version
-2.38, <URL: http://CRAN.R-project.org/package=survival>.
+2.38, <URL: https://CRAN.R-project.org/package=survival>.
 
 Terry M. Therneau and Patricia M. Grambsch (2000). Modeling Survival Data: Extending the Cox Model. Springer, New York. ISBN 0-387-98784-3.
 

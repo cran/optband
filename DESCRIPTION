@@ -1,8 +1,8 @@
 Package: optband
 Type: Package
 Title: 'surv' Object Confidence Bands Optimized by Area
-Version: 0.2
-Date: 2016-08-24
+Version: 0.2.1
+Date: 2017-09-05
 Author: Tom Chen & Sam Tracy
 Maintainer: Sam Tracy <stracy@g.harvard.edu>
 Description: Given a certain coverage level, obtains simultaneous confidence
@@ -15,10 +15,10 @@ License: GPL-2 | GPL-3
 LazyData: TRUE
 URL: https://github.com/seasamgo/optband
 BugReports: http://github.com/seasamgo/optband/issues
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Suggests: stats, survival, km.ci, knitr, rmarkdown
 VignetteBuilder: knitr, rmarkdown
 NeedsCompilation: no
-Packaged: 2016-08-27 16:17:33 UTC; Rx
+Packaged: 2017-05-10 01:06:12 UTC; Rx
 Repository: CRAN
-Date/Publication: 2016-08-27 18:47:57
+Date/Publication: 2017-05-10 01:24:14 UTC
